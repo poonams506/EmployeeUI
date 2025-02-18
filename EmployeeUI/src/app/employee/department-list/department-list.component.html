@@ -1,0 +1,31 @@
+<div class="container">
+    <h2>DEPARTMENT</h2>
+  
+    <div class="actions">
+      <button class="btn-add" (click)="addEmployeeDetail()">Add New Member</button>
+    </div>
+  
+    <!-- Member Table -->
+    <table class="member-table">
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Department</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employ of employees">
+          <td>{{ employ.name }}</td>
+          <td>{{ employ.department }}</td> 
+          
+          <td>
+            <!-- Edit and Delete buttons  -->
+            <button class="btn-edit" (click)="editEmployeeDetail(employ.id)">Edit</button>
+            <button class="btn-delete" (click)="deleteEmployeeDetail(employ.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+

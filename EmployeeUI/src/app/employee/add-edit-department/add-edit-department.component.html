@@ -1,0 +1,35 @@
+<form [formGroup]="employeeDetailForm" (ngSubmit)="onSubmit()" class="form-container">
+  <!-- Employee Dropdown -->
+  <div class="form-group">
+    <label for="employeeId">Select Employee:</label>
+    <select id="employeeId" formControlName="employeeId" (change)="selectEmployee($event)" class="form-control">
+      <option value="" disabled selected>-- Select Employee --</option>
+      <option *ngFor="let emp of employees" [value]="emp.id">{{ emp.name }}</option>
+    </select>
+    <div *ngIf="employeeDetailForm.controls['employeeId'].invalid && employeeDetailForm.controls['employeeId'].touched" class="error">
+      Employee selection is required.
+    </div>
+  </div>
+
+  <!-- Department Radios -->
+  <div class="form-group">
+    <label>Department:</label>
+    <div class="radio-group">
+      <label *ngFor="let dept of departments" class="radio-item">
+        <input
+          type="radio"
+          formControlName="department"
+          [value]="dept.id"
+          (change)="selectDepartment(dept.id)"
+        />
+        {{ dept.name }}
+      </label>
+    </div>
+    <div *ngIf="employeeDetailForm.controls['department'].invalid && employeeDetailForm.controls['department'].touched" class="error">
+      Department selection is required.
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn-submit" >Save</button>
+</form>

@@ -1,0 +1,40 @@
+<div class="container">
+  <h2>EMPLOYEE LIST</h2>
+  
+  <div class="actions">
+    <button class="btn-add" (click)="addEmployee()">Add New Member</button>
+  </div>
+  
+  <!-- Employee Table -->
+  <table class="member-table">
+    <thead>
+      <tr>
+        <th>Employee Code</th>
+        <th>Name</th>
+        <th>DOB</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>State</th>
+        <th>City</th>
+        <th>Allow IPs</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employ of employees">
+        <td>{{ employ.employCode }}</td>
+        <td>{{ employ.name }}</td>
+        <td>{{ employ.dob | date:'dd/MM/yyyy' }}</td>
+        <td>{{ employ.email }}</td>
+        <td>{{ employ.mobile }}</td>
+        <td>{{ getStateNameById(employ.state) }}</td>
+        <td>{{ getCityNameById(employ.city) }}</td>
+        <td>{{ getIpAddresses(employ.employeeNetworkIps) }}</td>
+        <td>
+          <button class="btn-edit" (click)="editEmployee(employ)">Edit</button>
+          <button class="btn-delete" (click)="deleteEmployee(employ.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

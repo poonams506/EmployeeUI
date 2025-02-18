@@ -1,0 +1,126 @@
+<div class="container">
+  <h2>{{ employeeId ? 'Edit Employee' : 'Add Employee' }}</h2>
+
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="employCode">Employee Code:</label>
+        <input
+          type="text"
+          id="employCode"
+          formControlName="employCode"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('employCode')?.invalid && employeeForm.get('employCode')?.touched}" />
+        <div *ngIf="employeeForm.get('employCode')?.invalid && employeeForm.get('employCode')?.touched" class="invalid-feedback">
+          Employee Code is required.
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched}" />
+        <div *ngIf="employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched" class="invalid-feedback">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched}" />
+        <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched" class="invalid-feedback">
+          A valid email is required.
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="mobile">Mobile:</label>
+        <input
+          type="text"
+          id="mobile"
+          formControlName="mobile"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('mobile')?.invalid && employeeForm.get('mobile')?.touched}" />
+        <div *ngIf="employeeForm.get('mobile')?.invalid && employeeForm.get('mobile')?.touched" class="invalid-feedback">
+          Mobile number is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="dob">Date of Birth:</label>
+        <input
+          type="date"
+          id="dob"
+          formControlName="dob"
+          class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched}" />
+        <div *ngIf="employeeForm.get('dob')?.invalid && employeeForm.get('dob')?.touched" class="invalid-feedback">
+          Date of birth is required.
+        </div>
+        <div *ngIf="employeeForm.get('dob')?.hasError('age') && employeeForm.get('dob')?.touched" class="invalid-feedback">
+          You must be at least 18 years old.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="state">State:</label>
+        <select id="state" formControlName="state" (change)="onStateChange()" class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('state')?.invalid && employeeForm.get('state')?.touched}">
+          <option value="">Select State</option>
+          <option *ngFor="let state of stateList" [value]="state.id">{{ state.name }}</option>
+        </select>
+        <div *ngIf="employeeForm.get('state')?.invalid && employeeForm.get('state')?.touched" class="invalid-feedback">
+          State is required.
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="city">City:</label>
+        <select id="city" formControlName="city" class="form-control"
+          [ngClass]="{'is-invalid': employeeForm.get('city')?.invalid && employeeForm.get('city')?.touched}">
+          <option value="">Select City</option>
+          <option *ngFor="let city of filteredCityList" [value]="city.id">{{ city.name }}</option>
+        </select>
+        <div *ngIf="employeeForm.get('city')?.invalid && employeeForm.get('city')?.touched" class="invalid-feedback">
+          City is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Employee Network IPs -->
+    <div formArrayName="employeeNetworkIps" class="form-group">
+      <label>Employee Network IPs</label>
+      <div *ngFor="let ipGroup of employeeNetworkIps.controls; let i = index" [formGroupName]="i" class="ip-group">
+        <input type="text" class="form-control ip-input" formControlName="ipAddress" placeholder="Enter IP address"
+          [ngClass]="{'is-invalid': ipGroup.get('ipAddress')?.invalid && ipGroup.get('ipAddress')?.touched}" />
+        <button type="button" class="btn btn-danger btn-sm" (click)="removeIp(i)">Remove</button>
+        <div *ngIf="ipGroup.get('ipAddress')?.invalid && ipGroup.get('ipAddress')?.touched" class="invalid-feedback">
+          Valid IP address is required.
+        </div>
+      </div>
+      <button type="button" class="btn btn-success btn-sm mt-2" (click)="addIp()">Add IP</button>
+    </div>
+
+    <div class="button-container">
+      <button type="submit" class="btn btn-primary">
+        {{ employeeId ? 'Update' : 'Save' }} Employee
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
+    </div>
+  </form>
+</div>
